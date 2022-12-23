@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../classes/Config.dart';
 import '../classes/Utils.dart';
+import '../providers/global_provider.dart';
 import '../pages/_AllPages.dart';
 
 class MiddlePage extends StatefulWidget {
@@ -52,6 +55,7 @@ class _MiddlePageState extends State<MiddlePage> {
     return WillPopScope(
       onWillPop: () async {
         Utils.log('( $_fileName ) WillPopScope() triggered');
+        context.read<Global>().incrementPop();
         return true;    // true allows back button (false denies)
       },
       child: SafeArea(
@@ -67,7 +71,9 @@ class _MiddlePageState extends State<MiddlePage> {
                 child: Container(
                   color: Color(0xFFeeeeee),
                   child: Center(
-                    child: Text( 'Pops: ' ),
+                    //child: Text( 'Pops: ${ Config.pops }' ),
+                    child: Text( 'Pops: ${ context.watch<Global>().getPops() }' ),
+                    //context.watch<Global>().getKittyCatalogPageHtml(),
                   ),
                 ),
               ),
@@ -76,16 +82,16 @@ class _MiddlePageState extends State<MiddlePage> {
                 child: Container(
                   color: Color(0xFFdddddd),
                   child: Center(
-                    child: Text( 'Clicks: ' ),
+                    child: Text( 'Clicks: ${ context.watch<Global>().getClicks() }' ),
                   ),
                 ),
-              ),              
+              ),           
               Expanded(
                 flex: 1,
                 child: Container(
                   color: Color(0xFFeeeeee),
                   child: Center(
-                    child: Text( 'Fruit: ' ),
+                    child: Text( 'Fruit: ${ context.watch<Global>().getFruit() }' ),
                   ),
                 ),
               ),
@@ -114,6 +120,7 @@ class _MiddlePageState extends State<MiddlePage> {
             child: Icon(Icons.add),
             onPressed: () {
               Utils.log('( $_fileName ) (event) clicked FloatingActionButton');
+              context.read<Global>().incrementClick();          
             },
           ),
         ),

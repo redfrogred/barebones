@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import './providers/global_provider.dart';
 import './pages/_AllPages.dart';
 
+
 void main() {
-  runApp(const MyApp());
+runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => Global()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

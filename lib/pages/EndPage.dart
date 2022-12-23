@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../classes/Config.dart';
 import '../classes/Utils.dart';
+import '../providers/global_provider.dart';
 import '../pages/_AllPages.dart';
 
 class EndPage extends StatefulWidget {
@@ -54,6 +57,7 @@ class _EndPageState extends State<EndPage> {
     return WillPopScope(
       onWillPop: () async {
         Utils.log('( $_fileName ) WillPopScope() triggered');
+        context.read<Global>().incrementPop();
         return true;    // true allows back button (false denies)
       },
       child: SafeArea(
@@ -69,7 +73,7 @@ class _EndPageState extends State<EndPage> {
                 child: Container(
                   color: Color(0xFFeeeeee),
                   child: Center(
-                    child: Text( 'Pops: ' ),
+                    child: Text( 'Pops: ${ context.watch<Global>().getPops() }' ),
                   ),
                 ),
               ),
@@ -78,10 +82,10 @@ class _EndPageState extends State<EndPage> {
                 child: Container(
                   color: Color(0xFFdddddd),
                   child: Center(
-                    child: Text( 'Clicks: ' ),
+                    child: Text( 'Clicks: ${ context.watch<Global>().getClicks() }' ),
                   ),
                 ),
-              ),              
+              ),               
               Expanded(
                 flex: 1,
                 child: Container(
@@ -112,7 +116,7 @@ class _EndPageState extends State<EndPage> {
                       ElevatedButton(
                         onPressed: () {
                           Utils.log('( $_fileName ) (event) clicked "ENTER", value = "${ _textController.text } "');
-
+                          context.read<Global>().setFruit( _textController.text );
                         },
                         // start of button appearance settings 
                         child: Text( 'ENTER' ),
