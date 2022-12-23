@@ -19,6 +19,7 @@ class _EndPageState extends State<EndPage> {
 
   // (this page) variables
   static const String _fileName = 'EndPage.dart';
+  final TextEditingController _textController = TextEditingController();
   
   // (this page) init and dispose
   @override
@@ -31,6 +32,7 @@ class _EndPageState extends State<EndPage> {
   @override
   void dispose() {
     Utils.log('( $_fileName ) dispose()');
+    _textController.dispose();
     super.dispose();
   }
 
@@ -60,21 +62,86 @@ class _EndPageState extends State<EndPage> {
             title: Text( _fileName ),
             centerTitle: true,
           ),
-          body: Container(
-            color: Colors.transparent,
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Utils.log('( $_fileName ) (event) clicked "go back to StartPage()"');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => StartPage())
-                  );                
-                },
-                // start of button appearance settings 
-                child: Text( 'Go back to StartPage()' ),
-
+          body: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Color(0xFFeeeeee),
+                  child: Center(
+                    child: Text( 'Pops: ' ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Color(0xFFdddddd),
+                  child: Center(
+                    child: Text( 'Clicks: ' ),
+                  ),
+                ),
+              ),              
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text( 'Fruit: ' ),
+                      SizedBox(
+                        width: 100,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10,0,10,0),
+                          child: TextFormField(
+                            
+                            controller: _textController,
+                            decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,                              
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(width: 2, color: Colors.black),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(width: 3, color: Colors.blue),
+                            )),                            
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Utils.log('( $_fileName ) (event) clicked "ENTER", value = "${ _textController.text } "');
+
+                        },
+                        // start of button appearance settings 
+                        child: Text( 'ENTER' ),
+                
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Utils.log('( $_fileName ) (event) clicked "go back to StartPage()"');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => StartPage())
+                        );                
+                      },
+                      // start of button appearance settings 
+                      child: Text( 'Go to StartPage()' ),
+              
+                    ),
+                  ),
+                ),
+              ),                            
+            ],
           ),
         ),
       ),
