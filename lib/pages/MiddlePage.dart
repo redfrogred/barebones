@@ -71,9 +71,12 @@ class _MiddlePageState extends State<MiddlePage> {
                 child: Container(
                   color: Color(0xFFeeeeee),
                   child: Center(
-                    //child: Text( 'Pops: ${ Config.pops }' ),
-                    child: Text( 'Pops: ${ context.watch<Global>().getPops() }' ),
-                    //context.watch<Global>().getKittyCatalogPageHtml(),
+                    //  see: https://www.youtube.com/watch?v=Mk3nsf3wTIs
+                    //  old way:
+                    //  child: Text( 'Pops: ${ context.watch<Global>().getPops() }' ),
+                    //  new way:
+                    child: Text( 'Pops: ${ Provider.of<Global>(context).getPops() } '),
+
                   ),
                 ),
               ),
@@ -82,7 +85,18 @@ class _MiddlePageState extends State<MiddlePage> {
                 child: Container(
                   color: Color(0xFFdddddd),
                   child: Center(
-                    child: Text( 'Clicks: ${ context.watch<Global>().getClicks() }' ),
+                    //  see: https://www.youtube.com/watch?v=Mk3nsf3wTIs
+                    //  old way:
+                    //  child: Text( 'Pops: ${ context.watch<Global>().getClicks() }' ),
+                    //  new way:
+                    //  child: Text( 'Pops: ${ Provider.of<Global>(context).getClicks() } '),
+                    //  even newer way!
+                    //  see: https://stackoverflow.com/questions/58774301/when-to-use-provider-ofx-vs-consumerx-in-flutter
+                    child: Consumer<Global>(
+                      builder: ( context, _, __ ) { 
+                        return Text( 'Clicks: ${ Config.clicks.toString() }' );
+                      },
+                    ),
                   ),
                 ),
               ),           
@@ -120,7 +134,10 @@ class _MiddlePageState extends State<MiddlePage> {
             child: Icon(Icons.add),
             onPressed: () {
               Utils.log('( $_fileName ) (event) clicked FloatingActionButton');
-              context.read<Global>().incrementClick();          
+              //  old way:
+              //  context.read<Global>().incrementClick();          
+              //  new way:
+              Provider.of<Global>(context, listen: false).incrementClick();
             },
           ),
         ),
