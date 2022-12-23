@@ -60,21 +60,61 @@ class _MiddlePageState extends State<MiddlePage> {
             title: Text( _fileName ),
             centerTitle: true,
           ),
-          body: Container(
-            color: Colors.transparent,
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Utils.log('( $_fileName ) (event) clicked "go to EndPage()"');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => EndPage())
-                  );                
-                },
-                // start of button appearance settings 
-                child: Text( 'Go to EndPage()' ),
-
+          body: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Color(0xFFeeeeee),
+                  child: Center(
+                    child: Text( 'Pops: ' ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Color(0xFFdddddd),
+                  child: Center(
+                    child: Text( 'Clicks: ' ),
+                  ),
+                ),
+              ),              
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Color(0xFFeeeeee),
+                  child: Center(
+                    child: Text( 'Fruit: ' ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Utils.log('( $_fileName ) (event) clicked "go to EndPage()"');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => EndPage())
+                        );                
+                      },
+                      // start of button appearance settings 
+                      child: Text( 'Go to EndPage()' ),
+              
+                    ),
+                  ),
+                ),
+              ),                            
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              Utils.log('( $_fileName ) (event) clicked FloatingActionButton');
+            },
           ),
         ),
       ),
